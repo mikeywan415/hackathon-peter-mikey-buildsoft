@@ -28,20 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
+            this.filterFloorPlan = new DevExpress.XtraEditors.SimpleButton();
             this.textEdit1 = new DevExpress.XtraEditors.TextEdit();
             this.labelControl1 = new DevExpress.XtraEditors.LabelControl();
             ((System.ComponentModel.ISupportInitialize)(this.textEdit1.Properties)).BeginInit();
             this.SuspendLayout();
             // 
-            // simpleButton1
+            // filterFloorPlan
             // 
-            this.simpleButton1.Location = new System.Drawing.Point(724, 227);
-            this.simpleButton1.Name = "simpleButton1";
-            this.simpleButton1.Size = new System.Drawing.Size(94, 29);
-            this.simpleButton1.TabIndex = 0;
-            this.simpleButton1.Text = "simpleButton1";
-            this.simpleButton1.Click += new System.EventHandler(this.simpleButton1_Click);
+            this.filterFloorPlan.Location = new System.Drawing.Point(724, 227);
+            this.filterFloorPlan.Name = "filterFloorPlan";
+            this.filterFloorPlan.Size = new System.Drawing.Size(94, 29);
+            this.filterFloorPlan.TabIndex = 0;
+            this.filterFloorPlan.Text = "Filter Floor Plan";
+            this.filterFloorPlan.Click += new System.EventHandler(this.simpleButton1_Click);
             // 
             // textEdit1
             // 
@@ -65,7 +65,7 @@
             this.ClientSize = new System.Drawing.Size(1727, 1097);
             this.Controls.Add(this.labelControl1);
             this.Controls.Add(this.textEdit1);
-            this.Controls.Add(this.simpleButton1);
+            this.Controls.Add(this.filterFloorPlan);
             this.Name = "XtraForm1";
             this.Text = "XtraForm1";
             this.Load += new System.EventHandler(this.XtraForm1_Load);
@@ -77,7 +77,7 @@
 
         #endregion
 
-        private DevExpress.XtraEditors.SimpleButton simpleButton1;
+        private DevExpress.XtraEditors.SimpleButton filterFloorPlan;
         private DevExpress.XtraEditors.TextEdit textEdit1;
         private DevExpress.XtraEditors.LabelControl labelControl1;
     }

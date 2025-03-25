@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
@@ -9,7 +11,7 @@ using System.Threading.Tasks;
 public class GPTClient
 {
     private readonly HttpClient _httpClient;
-    private readonly string _apiKey = "ask mikey"; // Replace with your real API key
+    private readonly string _apiKey = "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"; // Replace with your real API key
 
     public GPTClient()
     {
@@ -95,5 +97,41 @@ public class GPTClient
         if (result.Contains("false")) return false;
 
         return null; // Could not determine
+    }
+
+    public async Task<Dictionary<string, bool?>> AnalyzeImagesInFolderAsync(string folderPath, string question, string outputFolder)
+    {
+        var results = new Dictionary<string, bool?>();
+
+        if (!Directory.Exists(folderPath))
+            return results;
+
+        // Create output folder if it doesn't exist
+        if (!Directory.Exists(outputFolder))
+            Directory.CreateDirectory(outputFolder);
+
+        string[] imageFiles = Directory.GetFiles(folderPath, "*.*", SearchOption.TopDirectoryOnly)
+                                       .Where(file => file.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase)
+                                                   || file.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase)
+                                                   || file.EndsWith(".png", StringComparison.OrdinalIgnoreCase))
+                                       .ToArray();
+
+        foreach (var imagePath in imageFiles)
+        {
+            Console.WriteLine($"Processing: {Path.GetFileName(imagePath)}...");
+            bool? result = await AnalyzeImageAsync(imagePath, question);
+            results[Path.GetFileName(imagePath)] = result;
+
+            if (result == true)
+            {
+                string fileName = Path.GetFileName(imagePath);
+                string destinationPath = Path.Combine(outputFolder, fileName);
+
+                // You can choose to Copy or Move the file
+                File.Copy(imagePath, destinationPath, overwrite: true);
+            }
+        }
+
+        return results;
     }
 }

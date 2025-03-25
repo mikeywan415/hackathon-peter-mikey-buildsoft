@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,20 +28,24 @@ namespace WindowsFormsApp1
 
         private async void simpleButton1_Click(object sender, EventArgs e)
         {
-            OpenFileDialog ofd = new OpenFileDialog();
-            ofd.Filter = "Image Files|*.jpg;*.jpeg;*.png";
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
 
-            if (ofd.ShowDialog() == DialogResult.OK)
+            if (fbd.ShowDialog() == DialogResult.OK)
             {
-                string imagePath = ofd.FileName;
+                string folderPath = fbd.SelectedPath;
                 string question = "Is this a floor plan?";
+                string outputFolder = Path.Combine(folderPath, "FilteredResults");
 
-                bool? result = await gpt.AnalyzeImageAsync(imagePath, question);
+                var results = await gpt.AnalyzeImagesInFolderAsync(folderPath, question, outputFolder);
 
-                if (result.HasValue)
-                    MessageBox.Show($"Result: {result.Value}");
-                else
-                    MessageBox.Show("Could not determine the result.");
+                // Display results (e.g., in a textbox or messagebox)
+                StringBuilder sb = new StringBuilder();
+                foreach (var kvp in results)
+                {
+                    sb.AppendLine($"{kvp.Key}: {(kvp.Value.HasValue ? kvp.Value.ToString() : "Unknown")}");
+                }
+
+                MessageBox.Show(sb.ToString(), "Analysis Results");
             }
         }
     }
