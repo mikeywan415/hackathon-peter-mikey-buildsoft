@@ -3,8 +3,24 @@
   "WorkspaceRootPath": "C:\\Buildsoft\\hackathon-buildsoft\\WindowsFormsApp1\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{89214758-5FFB-45A7-A4E5-478B2434CB16}|WindowsFormsApp1\\WindowsFormsApp1.csproj|c:\\buildsoft\\hackathon-buildsoft\\windowsformsapp1\\windowsformsapp1\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
-      "RelativeMoniker": "D:0:0:{89214758-5FFB-45A7-A4E5-478B2434CB16}|WindowsFormsApp1\\WindowsFormsApp1.csproj|solutionrelative:windowsformsapp1\\form1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
+      "AbsoluteMoniker": "D:0:0:{89214758-5FFB-45A7-A4E5-478B2434CB16}|WindowsFormsApp1\\WindowsFormsApp1.csproj|c:\\buildsoft\\hackathon-buildsoft\\windowsformsapp1\\windowsformsapp1\\gptccient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{89214758-5FFB-45A7-A4E5-478B2434CB16}|WindowsFormsApp1\\WindowsFormsApp1.csproj|solutionrelative:windowsformsapp1\\gptccient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{89214758-5FFB-45A7-A4E5-478B2434CB16}|WindowsFormsApp1\\WindowsFormsApp1.csproj|c:\\buildsoft\\hackathon-buildsoft\\windowsformsapp1\\windowsformsapp1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{89214758-5FFB-45A7-A4E5-478B2434CB16}|WindowsFormsApp1\\WindowsFormsApp1.csproj|solutionrelative:windowsformsapp1\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{89214758-5FFB-45A7-A4E5-478B2434CB16}|WindowsFormsApp1\\WindowsFormsApp1.csproj|c:\\buildsoft\\hackathon-buildsoft\\windowsformsapp1\\windowsformsapp1\\xtraform1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{89214758-5FFB-45A7-A4E5-478B2434CB16}|WindowsFormsApp1\\WindowsFormsApp1.csproj|solutionrelative:windowsformsapp1\\xtraform1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{89214758-5FFB-45A7-A4E5-478B2434CB16}|WindowsFormsApp1\\WindowsFormsApp1.csproj|c:\\buildsoft\\hackathon-buildsoft\\windowsformsapp1\\windowsformsapp1\\xtraform1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{89214758-5FFB-45A7-A4E5-478B2434CB16}|WindowsFormsApp1\\WindowsFormsApp1.csproj|solutionrelative:windowsformsapp1\\xtraform1.designer.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{89214758-5FFB-45A7-A4E5-478B2434CB16}|WindowsFormsApp1\\WindowsFormsApp1.csproj|c:\\buildsoft\\hackathon-buildsoft\\windowsformsapp1\\windowsformsapp1\\xtraform1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form",
+      "RelativeMoniker": "D:0:0:{89214758-5FFB-45A7-A4E5-478B2434CB16}|WindowsFormsApp1\\WindowsFormsApp1.csproj|solutionrelative:windowsformsapp1\\xtraform1.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}|Form"
     }
   ],
   "DocumentGroupContainers": [
@@ -14,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 17,
+          "SelectedChildIndex": 18,
           "Children": [
             {
               "$type": "Bookmark",
@@ -66,10 +82,6 @@
             },
             {
               "$type": "Bookmark",
-              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
-            },
-            {
-              "$type": "Bookmark",
               "Name": "ST:130:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
             },
             {
@@ -86,14 +98,66 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Form1.cs [Design]",
-              "DocumentMoniker": "C:\\Buildsoft\\hackathon-buildsoft\\WindowsFormsApp1\\WindowsFormsApp1\\Form1.cs",
-              "RelativeDocumentMoniker": "WindowsFormsApp1\\Form1.cs",
-              "ToolTip": "C:\\Buildsoft\\hackathon-buildsoft\\WindowsFormsApp1\\WindowsFormsApp1\\Form1.cs [Design]",
-              "RelativeToolTip": "WindowsFormsApp1\\Form1.cs [Design]",
+              "DocumentIndex": 3,
+              "Title": "XtraForm1.Designer.cs",
+              "DocumentMoniker": "C:\\Buildsoft\\hackathon-buildsoft\\WindowsFormsApp1\\WindowsFormsApp1\\XtraForm1.Designer.cs",
+              "RelativeDocumentMoniker": "WindowsFormsApp1\\XtraForm1.Designer.cs",
+              "ToolTip": "C:\\Buildsoft\\hackathon-buildsoft\\WindowsFormsApp1\\WindowsFormsApp1\\XtraForm1.Designer.cs",
+              "RelativeToolTip": "WindowsFormsApp1\\XtraForm1.Designer.cs",
+              "ViewState": "AgIAAA4AAAAAAAAAAAAtwCsAAABFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-03-25T01:37:03.42Z",
+              "WhenOpened": "2025-03-25T04:07:49.013Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "XtraForm1.cs",
+              "DocumentMoniker": "C:\\Buildsoft\\hackathon-buildsoft\\WindowsFormsApp1\\WindowsFormsApp1\\XtraForm1.cs",
+              "RelativeDocumentMoniker": "WindowsFormsApp1\\XtraForm1.cs",
+              "ToolTip": "C:\\Buildsoft\\hackathon-buildsoft\\WindowsFormsApp1\\WindowsFormsApp1\\XtraForm1.cs",
+              "RelativeToolTip": "WindowsFormsApp1\\XtraForm1.cs",
+              "ViewState": "AgIAAAwAAAAAAAAAAAAAACMAAAA3AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-25T04:06:53.728Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "GPTCCient.cs",
+              "DocumentMoniker": "C:\\Buildsoft\\hackathon-buildsoft\\WindowsFormsApp1\\WindowsFormsApp1\\GPTCCient.cs",
+              "RelativeDocumentMoniker": "WindowsFormsApp1\\GPTCCient.cs",
+              "ToolTip": "C:\\Buildsoft\\hackathon-buildsoft\\WindowsFormsApp1\\WindowsFormsApp1\\GPTCCient.cs",
+              "RelativeToolTip": "WindowsFormsApp1\\GPTCCient.cs",
+              "ViewState": "AgIAACkAAAAAAAAAAAAiwC4AAAAEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-25T03:12:43.85Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Buildsoft\\hackathon-buildsoft\\WindowsFormsApp1\\WindowsFormsApp1\\Program.cs",
+              "RelativeDocumentMoniker": "WindowsFormsApp1\\Program.cs",
+              "ToolTip": "C:\\Buildsoft\\hackathon-buildsoft\\WindowsFormsApp1\\WindowsFormsApp1\\Program.cs",
+              "RelativeToolTip": "WindowsFormsApp1\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAMAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-25T01:37:23.615Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "XtraForm1.cs [Design]",
+              "DocumentMoniker": "C:\\Buildsoft\\hackathon-buildsoft\\WindowsFormsApp1\\WindowsFormsApp1\\XtraForm1.cs",
+              "RelativeDocumentMoniker": "WindowsFormsApp1\\XtraForm1.cs",
+              "ToolTip": "C:\\Buildsoft\\hackathon-buildsoft\\WindowsFormsApp1\\WindowsFormsApp1\\XtraForm1.cs [Design]",
+              "RelativeToolTip": "WindowsFormsApp1\\XtraForm1.cs [Design]",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-03-25T01:37:18.537Z",
               "EditorCaption": " [Design]"
             }
           ]
