@@ -3,11 +3,9 @@ using ImageMagick;
 using Npgsql;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.IO;
-using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -17,11 +15,11 @@ namespace WindowsFormsApp1
     public partial class XtraForm1 : DevExpress.XtraEditors.XtraForm
     {
         GPTClient gpt;
-        private List<PlanData> planDataList;
         private readonly string directoryPath;
         private readonly string originalFilePath;
         private readonly string convertedFilePath;
-        string connectionString = "Server=127.0.0.1;Port=5432;Database=buildsoft_12.2.1.0;User Id=standaloneBuildsoftUser;Password=pass4Buildsoftuser;CommandTimeout=180;Timeout=150;";
+
+
         public XtraForm1()
         {
             InitializeComponent();
@@ -29,8 +27,7 @@ namespace WindowsFormsApp1
             directoryPath = AppDomain.CurrentDomain.BaseDirectory;
             originalFilePath = Path.Combine(directoryPath, "original");
             convertedFilePath = Path.Combine(directoryPath, "converted");
-            planDataList = new List<PlanData>();
-
+            txtBoxConnectionStr.Text = "Server=127.0.0.1;Port=5432;Database=buildsoft_12.2.1.0;User Id=standaloneBuildsoftUser;Password=pass4Buildsoftuser;CommandTimeout=180;Timeout=150;";
         }
 
         private void XtraForm1_Load(object sender, EventArgs e)
@@ -41,33 +38,24 @@ namespace WindowsFormsApp1
         private async void simpleButton1_Click(object sender, EventArgs e)
         {
 
-            string folderPath = convertedFilePath;
-            string question = "Is this a floor plan?";
-            string outputFolder = Path.Combine(folderPath, "FilteredResults");
-
-            var results = await gpt.AnalyzeImagesInFolderAsync(folderPath, question, outputFolder);
-
-            // Display results (e.g., in a textbox or messagebox)
-            StringBuilder sb = new StringBuilder();
-            foreach (var kvp in results)
-            {
-                sb.AppendLine($"{kvp.Key}: {(kvp.Value.HasValue ? kvp.Value.ToString() : "Unknown")}");
-            }
-
-            MessageBox.Show(sb.ToString(), "Analysis Results");
-
         }
-
 
         private void ReadDataFromPostgreSQL()
         {
+            string connectionString = txtBoxConnectionStr.Text;
 
             using (var connection = new NpgsqlConnection(connectionString))
             {
                 connection.Open();
+                using (var command = new NpgsqlCommand("SELECT COUNT(*) FROM plandata", connection))
+                {
+                    int totalRecords = Convert.ToInt32(command.ExecuteScalar());
+                    progressBar.Maximum = totalRecords;
+                }
                 using (var command = new NpgsqlCommand("SELECT * FROM plandata", connection))
                 using (var reader = command.ExecuteReader())
                 {
+                    int processedRecords = 0;
                     while (reader.Read())
                     {
                         var planData = new PlanData
@@ -81,8 +69,6 @@ namespace WindowsFormsApp1
                             DetectSymbolsCache = reader.IsDBNull(reader.GetOrdinal("detectsymbolscache")) ? null : reader.GetString(reader.GetOrdinal("detectsymbolscache"))
                         };
 
-                        planDataList.Add(planData);
-
                         // Save the Data field to a file
                         if (planData.Data != null && planData.Filename != null)
                         {
@@ -90,34 +76,31 @@ namespace WindowsFormsApp1
                             string filePath = Path.Combine(originalFilePath, planData.Filename);
                             File.WriteAllBytes(filePath, planData.Data);
                         }
-                    }
-                }
-            }
-        }
 
-        private void ConvertFilesToJpg()
-        {
-            foreach (var planData in planDataList)
-            {
-                if (planData.Filename != null)
-                {
-                    string filePath = Path.Combine(originalFilePath, planData.Filename);
-                    string jpgFilePath = Path.Combine(convertedFilePath, Path.GetFileNameWithoutExtension(planData.Filename) + ".jpg");
+                        // Convert the file to JPG
+                        if (planData.Filename != null)
+                        {
+                            string filePath = Path.Combine(originalFilePath, planData.Filename);
+                            string jpgFilePath = Path.Combine(convertedFilePath, Path.GetFileNameWithoutExtension(planData.Filename) + ".jpg");
 
-                    string extension = Path.GetExtension(planData.Filename).ToLower();
-                    switch (extension)
-                    {
-                        case ".pdf":
-                            ConvertPdfToJpg(filePath, jpgFilePath);
-                            break;
-                        case ".jpg":
-                        case ".jpeg":
-                        case ".png":
-                            ConvertImageToJpg(filePath, jpgFilePath);
-                            break;
-                        case ".dwg":
-                            // Handle DWG files if needed
-                            break;
+                            string extension = Path.GetExtension(planData.Filename).ToLower();
+                            switch (extension)
+                            {
+                                case ".pdf":
+                                    ConvertPdfToJpg(filePath, jpgFilePath);
+                                    break;
+                                case ".jpg":
+                                case ".jpeg":
+                                case ".png":
+                                    ConvertImageToJpg(filePath, jpgFilePath);
+                                    break;
+                                case ".dwg":
+                                    // Handle DWG files if needed
+                                    break;
+                            }
+                        }
+                        processedRecords++;
+                        progressBar.Value = processedRecords;
                     }
                 }
             }
@@ -199,9 +182,28 @@ namespace WindowsFormsApp1
 
         private void btnGetPlan_Click(object sender, EventArgs e)
         {
+            progressBar.Value = 0;
             ReadDataFromPostgreSQL();
-            ConvertFilesToJpg();
             MessageBox.Show("Files have been converted to JPG format.");
+        }
+
+        private async void btnFilterFloorPlan_Click(object sender, EventArgs e)
+        {
+            string folderPath = convertedFilePath;
+            string question = "Is this a floor plan?";
+            string outputFolder = Path.Combine(folderPath, "FilteredResults");
+            txtBoxOutput.Text = outputFolder;
+            progressBar.Value = 0;
+            var results = await gpt.AnalyzeImagesInFolderAsync(folderPath, question, outputFolder,progressBar);
+
+            // Display results (e.g., in a textbox or messagebox)
+            StringBuilder sb = new StringBuilder();
+            foreach (var kvp in results)
+            {
+                sb.AppendLine($"{kvp.Key}: {(kvp.Value.HasValue ? kvp.Value.ToString() : "Unknown")}");
+            }
+
+            MessageBox.Show(sb.ToString(), "Analysis Results");
         }
     }
 }

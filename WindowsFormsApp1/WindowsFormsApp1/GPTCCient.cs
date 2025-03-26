@@ -7,6 +7,8 @@ using System.Net.Http.Headers;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using System.Windows.Forms;
+using ImageMagick;
 
 public class GPTClient
 {
@@ -96,10 +98,11 @@ public class GPTClient
         if (result.Contains("true")) return true;
         if (result.Contains("false")) return false;
 
+
         return null; // Could not determine
     }
 
-    public async Task<Dictionary<string, bool?>> AnalyzeImagesInFolderAsync(string folderPath, string question, string outputFolder)
+    public async Task<Dictionary<string, bool?>> AnalyzeImagesInFolderAsync(string folderPath, string question, string outputFolder, ProgressBar progressBar)
     {
         var results = new Dictionary<string, bool?>();
 
@@ -113,11 +116,24 @@ public class GPTClient
         string[] imageFiles = Directory.GetFiles(folderPath, "*.*", SearchOption.TopDirectoryOnly)
                                        .Where(file => file.EndsWith(".jpg", StringComparison.OrdinalIgnoreCase)
                                                    || file.EndsWith(".jpeg", StringComparison.OrdinalIgnoreCase)
-                                                   || file.EndsWith(".png", StringComparison.OrdinalIgnoreCase))
+                                                   || file.EndsWith(".png", StringComparison.OrdinalIgnoreCase)
+                                                   || file.EndsWith(".pdf", StringComparison.OrdinalIgnoreCase))
                                        .ToArray();
-
-        foreach (var imagePath in imageFiles)
+        progressBar.Maximum = imageFiles.Length;
+        progressBar.Value = 0;
+        foreach (var filePath in imageFiles)
         {
+            string extension = Path.GetExtension(filePath).ToLower();
+            string imagePath = filePath;
+
+            if (extension == ".pdf")
+            {
+                // Convert PDF to JPG
+                string jpgFilePath = Path.Combine(Path.GetDirectoryName(filePath), Path.GetFileNameWithoutExtension(filePath) + ".jpg");
+                ConvertPdfToJpg(filePath, jpgFilePath);
+                imagePath = jpgFilePath;
+            }
+
             Console.WriteLine($"Processing: {Path.GetFileName(imagePath)}...");
             bool? result = await AnalyzeImageAsync(imagePath, question);
             results[Path.GetFileName(imagePath)] = result;
@@ -130,8 +146,46 @@ public class GPTClient
                 // You can choose to Copy or Move the file
                 File.Copy(imagePath, destinationPath, overwrite: true);
             }
+            // Update progress bar
+            progressBar.Value++;
         }
 
         return results;
+    }
+
+    private void ConvertPdfToJpg(string pdfFilePath, string jpgFilePath)
+    {
+        try
+        {
+            int density = 300; // DPI setting for quality
+            // Ensure the directory exists
+            string directoryPath = Path.GetDirectoryName(jpgFilePath);
+            if (!Directory.Exists(directoryPath))
+            {
+                Directory.CreateDirectory(directoryPath);
+            }
+
+            MagickReadSettings settings = new MagickReadSettings
+            {
+                Density = new Density(density, density)
+            };
+
+            // Read the first page of the PDF into a MagickImage.
+            using (MagickImageCollection magickImageCollection = new MagickImageCollection())
+            {
+                magickImageCollection.Read(pdfFilePath, settings);
+
+                foreach (MagickImage magickImage in magickImageCollection)
+                {
+                    magickImage.Format = MagickFormat.Jpg;
+                    magickImage.Write(jpgFilePath);
+                    break; // Only process the first page
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error saving PDF as image: {ex.Message}");
+        }
     }
 }
