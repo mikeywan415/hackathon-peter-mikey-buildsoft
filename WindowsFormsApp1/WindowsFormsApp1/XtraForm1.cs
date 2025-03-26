@@ -30,7 +30,7 @@ namespace WindowsFormsApp1
             originalFilePath = Path.Combine(directoryPath, "original");
             convertedFilePath = Path.Combine(directoryPath, "converted");
             planDataList = new List<PlanData>();
-           
+
         }
 
         private void XtraForm1_Load(object sender, EventArgs e)
@@ -40,31 +40,28 @@ namespace WindowsFormsApp1
 
         private async void simpleButton1_Click(object sender, EventArgs e)
         {
-            FolderBrowserDialog fbd = new FolderBrowserDialog();
 
-            if (fbd.ShowDialog() == DialogResult.OK)
+            string folderPath = convertedFilePath;
+            string question = "Is this a floor plan?";
+            string outputFolder = Path.Combine(folderPath, "FilteredResults");
+
+            var results = await gpt.AnalyzeImagesInFolderAsync(folderPath, question, outputFolder);
+
+            // Display results (e.g., in a textbox or messagebox)
+            StringBuilder sb = new StringBuilder();
+            foreach (var kvp in results)
             {
-                string folderPath = fbd.SelectedPath;
-                string question = "Is this a floor plan?";
-                string outputFolder = Path.Combine(folderPath, "FilteredResults");
-
-                var results = await gpt.AnalyzeImagesInFolderAsync(folderPath, question, outputFolder);
-
-                // Display results (e.g., in a textbox or messagebox)
-                StringBuilder sb = new StringBuilder();
-                foreach (var kvp in results)
-                {
-                    sb.AppendLine($"{kvp.Key}: {(kvp.Value.HasValue ? kvp.Value.ToString() : "Unknown")}");
-                }
-
-                MessageBox.Show(sb.ToString(), "Analysis Results");
+                sb.AppendLine($"{kvp.Key}: {(kvp.Value.HasValue ? kvp.Value.ToString() : "Unknown")}");
             }
+
+            MessageBox.Show(sb.ToString(), "Analysis Results");
+
         }
 
 
         private void ReadDataFromPostgreSQL()
         {
-            
+
             using (var connection = new NpgsqlConnection(connectionString))
             {
                 connection.Open();
