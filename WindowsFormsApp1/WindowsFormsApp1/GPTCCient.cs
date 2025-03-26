@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 public class GPTClient
 {
     private readonly HttpClient _httpClient;
-    private readonly string _apiKey = "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"; // Replace with your real API key
+    private readonly string _apiKey = "ask mikey"; // Replace with your real API key
 
     public GPTClient()
     {
